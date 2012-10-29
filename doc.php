@@ -11,11 +11,8 @@ $query = "select * from docs where docid='$docid'";
 	$title = $row['title'];
 	$authorlast = $row['authorlast'];
 	$authorfirst = $row['authorfirst'];
-	
 ?>
-<?php
-	//session_start();
-?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -44,19 +41,20 @@ $query = "select * from docs where docid='$docid'";
 		
 		while($row = mysqli_fetch_array($result)) {
 			$paraid = $row['paraid'];
-			echo "<p>$paraid</p>";
-			$query2 = "SELECT sent FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
-			
-//			$query2 = "SELECT sent FROM sentences NATURAL JOIN parasent NATURAL JOIN docpara WHERE docid=1 AND paraid=2 ORDER BY sentid ASC";
+//			echo "<p>$paraid</p>";
 
+			echo "<p>";
+
+			$query2 = "SELECT sent FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
 				$result2 = mysqli_query($db, $query2)
 					or die("Error querying Database");
 				
 			while($row2 = mysqli_fetch_array($result2)) {
 				$sent = $row2['sent'];
-			
-				echo "<p>$sent</p>";
+
+				echo "<span style=background-color:rgb(50,75,60)>$sent </span>";
 			}
+			echo "</p>";
 		}
 	
 //	$query = "SELECT sentid, sent FROM sentences NATURAL JOIN parasent NATURAL JOIN docpara WHERE docid=1 AND paraid=2 ORDER BY sentid ASC";
