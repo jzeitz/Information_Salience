@@ -20,11 +20,13 @@ $colors = file('colors.txt');
 <div id="wrap">
 
 <?php
-//	foreach ($colors as $color) {
-//		echo "<br>$color";
-//	}
 
-print_r(file('colors.txt');
+	foreach ($colors as $color) {
+		$color = (explode(" ", $color));
+	}
+	
+	echo $colors[2];
+
 ?>
 	
 </div>

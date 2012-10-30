@@ -1,6 +1,8 @@
 <?php
 session_start();
 include "dbconnect.php";
+include "colorRamp.php";
+
 $docid = $_GET['id'];
 
 $query = "select * from docs where docid='$docid'";
@@ -39,6 +41,8 @@ $query = "select * from docs where docid='$docid'";
 			$result = mysqli_query($db, $query)
 				or die("Error querying Database");
 		
+		$c = $colors[2];
+		
 		while($row = mysqli_fetch_array($result)) {
 			$paraid = $row['paraid'];
 //			echo "<p>$paraid</p>";
@@ -52,7 +56,7 @@ $query = "select * from docs where docid='$docid'";
 			while($row2 = mysqli_fetch_array($result2)) {
 				$sent = $row2['sent'];
 
-				echo "<span style=background-color:rgb(50,75,60)>$sent </span>";
+				echo "<span style=background-color:rgb($c[0],$c[1],$c[2])>$sent </span>";
 			}
 			echo "</p>";
 		}
