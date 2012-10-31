@@ -20,13 +20,16 @@ $colors = file('colors.txt');
 <div id="wrap">
 
 <?php
+	$newColors = array();
 
 	foreach ($colors as $color) {
-		$color = (explode(" ", $color));
+		$newColors[] = (explode(" ", $color));
 	}
-	
-	echo $colors[2];
-
+//	foreach ($colors as $color) {
+		echo "new color: " . $newColors[0][0] . "<br>";
+		echo "new color: " . $newColors[0][1] . "<br>";
+		echo "new color: " . $newColors[0][2] . "<br>";
+	//}
 ?>
 	
 </div>
