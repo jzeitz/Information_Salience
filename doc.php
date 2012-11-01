@@ -1,6 +1,5 @@
 <?php
 include "dbconnect.php";
-include "colorRamp.php";
 
 $docid = $_GET['id'];
 
@@ -12,16 +11,16 @@ $query = "select * from docs where docid='$docid'";
 	$title = $row['title'];
 	$authorlast = $row['authorlast'];
 	$authorfirst = $row['authorfirst'];
-	
-$query = "";
-	
-//function colorRamp($score, $min, $max)
-	//global list
-	//size = len(list)
-	//score = (float(score)/float(max))*100.0
-	//index = score/(100.0/size)
-	//c = list[int(index)]
-	//return c
+	$numreadby = $row['numreadby'];
+
+function calcColor($score, $min, $max) {
+	include "colorRamp.php";
+	$size = count($colors);
+	$score = ($score/$max)*100.0;
+	$index = $score/(100.0/$size);
+	return array((int)$colors[$index][0],(int)$colors[$index][1],(int)$colors[$index][2]);
+}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -38,7 +37,7 @@ $query = "";
 </head>
 
 <body>
-<div id="wrap">
+<div id=wrap>
 
 	<?php
 		echo "<p><a href=\Information_Salience\index.php>Main</a></p>";
@@ -50,30 +49,29 @@ $query = "";
 			$result = mysqli_query($db, $query)
 				or die("Error querying Database");
 		
-		$c1 = $newColors[0][0];
-		$c2 = $newColors[0][1];
-		$c3 = $newColors[0][2];
-		//$c1 = "255";
-		//$c2 = "255";
-		//$c3 = "0";
-		echo $c1;
-		echo $c2;
-		echo $c3;
-		
 		while($row = mysqli_fetch_array($result)) {
 			$paraid = $row['paraid'];
 //			echo "<p>$paraid</p>";
 
 			echo "<p>";
 
-			$query2 = "SELECT sent FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
+			$query2 = "SELECT sent, userscore, progscore FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
 				$result2 = mysqli_query($db, $query2)
 					or die("Error querying Database");
-				
+			
 			while($row2 = mysqli_fetch_array($result2)) {
 				$sent = $row2['sent'];
-
-				echo "<span style=background-color:rgb(".$c1.",".$c2.",".$c3.")>$sent </span>";
+				$userScore = $row2['userscore'];
+				$progScore = $row2['progscore'];
+				
+				$minUser = 0;
+				$maxUser = $numreadby;
+				$minProg = 0;
+				$maxProg = 47790;
+				
+				list($c1, $c2, $c3) = calcColor($userScore, $minUser, $maxUser);
+				
+				echo "<span style=background-color:rgb(".$c1.",".$c2.",".$c3.")> $sent</span>";
 			}
 			echo "</p>";
 		}

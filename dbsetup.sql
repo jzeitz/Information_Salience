@@ -6,11 +6,11 @@ GRANT ALL PRIVILEGES ON salience.* to 'user'@'localhost' identified by 'salience
 --
 USE salience;
 
-CREATE TABLE IF NOT EXISTS `docs` (`docid` smallint(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(100) NOT NULL, `authorlast` varchar(50) NOT NULL, `authorfirst` varchar(50) NOT NULL) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `docs` (`docid` smallint(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(100) NOT NULL, `authorlast` varchar(50) NOT NULL, `authorfirst` varchar(50) NOT NULL, `numreadby` smallint(6) NOT NULL) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-INSERT INTO docs (title, authorlast, authorfirst) VALUES ('Culture Does Matter', 'Romney', 'Mitt');
+INSERT INTO docs (title, authorlast, authorfirst, numreadby) VALUES ('Culture Does Matter', 'Romney', 'Mitt', 12);
 
-INSERT INTO docs (title, authorlast, authorfirst) VALUES ('Forged Transcripts and Fake Essays', 'Bergman', 'Justin');
+INSERT INTO docs (title, authorlast, authorfirst, numreadby) VALUES ('Forged Transcripts and Fake Essays', 'Bergman', 'Justin', 12);
 
 CREATE TABLE IF NOT EXISTS `sentences` (`sentid` smallint(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, `sent` varchar(500) NOT NULL, userscore smallint(6) NOT NULL, progscore dec(8,2) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
