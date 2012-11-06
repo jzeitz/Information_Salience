@@ -15,6 +15,8 @@ include "dbconnect.php";
 
 <body>
 <div id="wrap">
+
+	<p>Information Salience</p>
 	<?php
 		$query = "SELECT * FROM docs";
 		$result = mysqli_query($db, $query)
@@ -30,7 +32,7 @@ include "dbconnect.php";
 			echo "<p>$authorlast, $authorfirst</p>";
 		}
 	?>
-	<?php
+<!--	<?php
 		
 		$query = "SELECT sentid, sent FROM sentences NATURAL JOIN parasent NATURAL JOIN docpara WHERE paraid=2 ORDER BY sentid ASC";
 		$result = mysqli_query($db, $query)
@@ -43,6 +45,7 @@ include "dbconnect.php";
 			
 		}
 	?>
+-->
 <!--    <?php
 		//if(session_is_registered(myusername)){
 		if(isset($_SESSION['userid'])){

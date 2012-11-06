@@ -55,11 +55,12 @@ function calcColor($score, $min, $max) {
 
 			echo "<p>";
 
-			$query2 = "SELECT sent, userscore, progscore FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
+			$query2 = "SELECT sentid, sent, userscore, progscore FROM sentences NATURAL JOIN parasent WHERE paraid=$paraid";
 				$result2 = mysqli_query($db, $query2)
 					or die("Error querying Database");
 			
 			while($row2 = mysqli_fetch_array($result2)) {
+				$sentid = $row2['sentid'];
 				$sent = $row2['sent'];
 				$userScore = $row2['userscore'];
 				$progScore = $row2['progscore'];
@@ -70,7 +71,7 @@ function calcColor($score, $min, $max) {
 				$maxProg = 47790;
 				
 				list($c1, $c2, $c3) = calcColor($userScore, $minUser, $maxUser);
-				
+				echo "$sentid<br>";
 				echo "<span style=background-color:rgb(".$c1.",".$c2.",".$c3.")> $sent</span>";
 			}
 			echo "</p>";
