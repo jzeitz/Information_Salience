@@ -1,6 +1,6 @@
 <?php
 
-$origColors = file('colors.txt');
+$origColors = file('colorsOrange.txt');
 
 $colors = array();
 

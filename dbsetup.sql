@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `docs` (`docid` smallint(6) NOT NULL AUTO_INCREMENT P
 
 --INSERT INTO docs (title, authorlast, authorfirst, numreadby) VALUES ('Forged Transcripts and Fake Essays', 'Bergman', 'Justin', 12);
 
-CREATE TABLE IF NOT EXISTS `sentences` (`sentid` smallint(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, `sent` varchar(500) NOT NULL, userscore smallint(6) NOT NULL, progscore dec(8,2) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `sentences` (`sentid` smallint(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, `sent` varchar(1000) NOT NULL, userscore smallint(6) NOT NULL, progscore dec(8,2) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --INSERT INTO sentences (sent, userscore, progscore) VALUES ('During my recent trip to Israel, I had suggested that the choices a society makes about its culture play a role in creating prosperity, and that the significant disparity between Israeli and Palestinian living standards was powerfully influenced by it.', '5', '1000.24');
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `docpara` (`docid` smallint(6) NOT NULL, `paraid` sma
 
 --INSERT INTO docpara (docid, paraid) VALUES (1, 2);
 
-INSERT INTO docpara (docid, paraid) VALUES (1, 1);
+--INSERT INTO docpara (docid, paraid) VALUES (1, 1);
 
 CREATE TABLE IF NOT EXISTS `parasent` (`paraid` smallint(6) NOT NULL, `sentid` smallint(6) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 

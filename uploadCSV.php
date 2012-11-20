@@ -2,7 +2,7 @@
 include "dbconnect.php";
 ini_set("auto_detect_line_endings", true);
 
-$file = fopen("Romney_CSV.csv","r");
+$file = fopen("Fisher_CS_CSV.csv","r");
 $title = fgetcsv($file);
 $authorlast = fgetcsv($file);
 $authorfirst = fgetcsv($file);
@@ -12,26 +12,30 @@ $query = "INSERT INTO docs (title, authorlast, authorfirst, numreadby) VALUES ('
 	$result = mysqli_query($db, $query)
 		or die("Error: Could not add document.");
 
-$query = "SELECT docid FROM docs WHERE title='$title[0]' AND authorlast='$authorlast[0]' AND authorfirst='$authorfirst[0]'";
+$query = "SELECT MAX(docid) FROM docs";
 	$result = mysqli_query($db, $query)
-		or die("Error: Could not find document.");
+		or die("Error: Cound not find document ID.");
 	$row = mysqli_fetch_array($result);
-
-	$docid = $row['docid'];
-
-//$query = "SELECT MAX(paraid) FROM parasent";
-//	$result = mysqli_query($db, $query)
-//		or die("Error: Could not find max paraid.");
-//	$row = mysqli_fetch_array($result);
 	
-//	$pnum = $row['MAX(paraid)'];
-$pnum = 0;
+	$docid = $row['MAX(docid)'];
+
+//$query = "SELECT docid FROM docs WHERE title='$title[0]' AND authorlast='$authorlast[0]' AND authorfirst='$authorfirst[0]'";
+//	$result = mysqli_query($db, $query)
+//		or die("Error: Could not find document.");
+//	$row = mysqli_fetch_array($result);
+//
+//	$docid = $row['docid'];
+
+$query = "SELECT MAX(paraid) FROM parasent";
+	$result = mysqli_query($db, $query)
+		or die("Error: Could not find max paraid.");
+	$row = mysqli_fetch_array($result);
+	
+	$pnum = $row['MAX(paraid)'];
+	
 while(!feof($file)) {
 	$line = fgetcsv($file);
-print_r($pnum);
-echo "<br>";
-print_r($line);
-echo "<br>";
+
 	if ($line[0] == "p") {
 		$pnum = $pnum + 1;
 		
@@ -39,10 +43,10 @@ echo "<br>";
 		$query = "INSERT INTO docpara (docid, paraid) VALUES ($docid, $pnum)";
 			$result = mysqli_query($db, $query)
 				or die("Error: Could not add document/paragraph pair.");
-		print_r($pnum);
-		echo "<br>";
+
 	} else {
-		$sent = $line[0];
+
+		$sent = mysqli_real_escape_string($db, $line[0]);
 		$userscore = $line[1];
 		$progscore = $line[2];
 		
@@ -50,7 +54,9 @@ echo "<br>";
 		$query = "INSERT INTO sentences (sent, userscore, progscore) VALUES ('$sent', '$userscore', '$progscore')";
 			$result = mysqli_query($db, $query)
 				or die("Error: Could not add sentence.");
-		
+//		if(!$result) {
+//  			print "<br>Error: " . mysqli_error($db) . "<br><br>";
+//		}		
 		$query = "SELECT sentid FROM sentences WHERE sent='$sent'";
 			$result = mysqli_query($db, $query)
 				or die("Error: Could not find sentence.");
@@ -62,6 +68,9 @@ echo "<br>";
 		$query = "INSERT INTO parasent (paraid, sentid) VALUES ($pnum, $sentid)";
 			$result = mysqli_query($db, $query)
 				or die("Error: Could not add paragraph/sentence pair.");
+//		if(!$result) {
+//  			print "<br>Error: " . mysqli_error($db) . "<br><br>";
+//		}
 	}
 }
 

@@ -15,9 +15,21 @@ $query = "select * from docs where docid='$docid'";
 
 function calcColor($score, $min, $max) {
 	include "colorRamp.php";
+//	echo "<br>input score=$score<br>";
+//	echo "min=$min<br>";
+//	echo "max=$max<br>";
 	$size = count($colors);
+//	echo "size=$size<br>";
 	$score = ($score/$max)*100.0;
-	$index = $score/(100.0/$size);
+//	echo "score=$score<br>";
+	$index = ceil($score/(100/$size));
+//	echo "index=$index<br>";
+//	print_r($colors[$index][0]);
+//	echo "<br>";
+//	print_r($colors[$index][1]);
+//	echo "<br>";
+//	print_r($colors[$index][2]);
+//	echo "<br>";
 	return array((int)$colors[$index][0],(int)$colors[$index][1],(int)$colors[$index][2]);
 }
 
@@ -71,7 +83,7 @@ function calcColor($score, $min, $max) {
 				$maxProg = 47790;
 				
 				list($c1, $c2, $c3) = calcColor($userScore, $minUser, $maxUser);
-				echo "$sentid<br>";
+//				echo "$sentid<br>";
 				echo "<span style=background-color:rgb(".$c1.",".$c2.",".$c3.")> $sent</span>";
 			}
 			echo "</p>";
